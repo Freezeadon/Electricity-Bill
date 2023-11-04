@@ -2,29 +2,29 @@ import javax.swing.*;   //all the import
 import java.awt.*;
 
 Public class Main {
-Public static void main (String [] args) {
-// Creating the main frame
-JFrame frame = new frame (“Zeus Utilities”);
- frame.setDefaultCloseOperation(JFrame.Exit_ON_Close);
-frame.setSize( 400, 300);
-frame.setLayout(new FlowLayout());
+        Public static void main (String [] args) {
+                // Creating the main frame
+                JFrame frame = new frame (“Zeus Utilities”);
+                frame.setDefaultCloseOperation(JFrame.Exit_ON_Close);
+                frame.setSize( 400, 300);
+                frame.setLayout(new FlowLayout());
 
-//create buttons for different operations
-JButton CustomerButton = new JButton(“New Customer”);
-JButton LoginButton = new JButton(“Customer Login”);
-JButton AdminButton =  new JButton(“Admin Login”);
-JButton QuitButton = new JButton(“Quit”);
+                //create buttons for different operations
+                JButton CustomerButton = new JButton(“New Customer”);
+                JButton LoginButton = new JButton(“Customer Login”);
+                JButton AdminButton =  new JButton(“Admin Login”);
+                JButton QuitButton = new JButton(“Quit”);
+                
+                //adding the buttons to the frame
+                frame.add(CustomerButton);
+                frame.add(LoginButton);
+                frame.add(AdminButton);
+                frame.add(QuitButton);
 
-//adding the buttons to the frame
-frame.add(CustomerButton);
-frame.add(LoginButton);
-frame.add(AdminButton);
-frame.add(QuitButton);
+                //display frame
+                frame.setVisible(true);
 
-//display frame
-frame.setVisible(true);
+                //methods for the buttons to go to different GUI
 
-//methods for the buttons to go to different GUI
-
-}
+        }
 }
