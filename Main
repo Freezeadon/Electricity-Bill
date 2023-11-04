@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JFrame implements ActionListener{
+    // instance variables used
     private JButton quit, signup, admin, login;
     private JLabel label1,label2,label3;
     private JTextField username;
     private JPasswordField password;
     private JPanel panel1,panel2,panel3,panel4;
-    Main(){
+    
+Main(){
         super("Electricity Billing System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
