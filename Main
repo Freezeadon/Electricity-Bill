@@ -2,64 +2,87 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class Main extends JFrame implements ActionListener{
-    // instance variables used
-    private JButton quit, signup, admin, login;
-    private JLabel label1,label2,label3;
-    private JTextField username;
-    private JPasswordField password;
-    private JPanel panel1,panel2,panel3,panel4;
-    
-Main(){
-        super("Electricity Billing System");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        label1 = new JLabel("User Name");
-        label2 = new JLabel("Password");
-        username = new JTextField(15);
-        password = new JPasswordField(15);
+    JTextField username;
+    JPasswordField password;
+    JButton login,quit,admin;
+    private HashMap<String, String> userCredentials;
 
-        login=new JButton("Login");
+    Main(){
+        super("Zeus Utilities");
+        getContentPane().setBackground(Color.pink);
+        setSize(1000,1000);
+        setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
+        setLayout(null);
 
-        quit=new JButton("Quit");
+        JLabel user = new JLabel("Username");
+        user.setBounds(550,320,100,20);
+        user.setFont(new Font("New Times Roman",Font.BOLD,20));
+        add(user);
 
-        admin=new JButton("Admin login");
+        username = new JTextField();
+        username.setBounds(650,320,150,30);
+        add(username);
 
+        JLabel pass =new JLabel("Password");
+        pass.setBounds(550,360,100,20);
+        pass.setFont(new Font("New Times Roman",Font.BOLD,20));
+        add(pass);
+
+        password = new JPasswordField();
+        password.setBounds(650,360,150,30);
+        add(password);
+
+        login = new JButton("Login");
+        login.setBounds(650,450,150,75);
         login.addActionListener(this);
+        login.setBackground(Color.lightGray);
+        add(login);
+
+        quit = new JButton("Quit");
+        quit.setBounds(450,550,150,75);
         quit.addActionListener(this);
+        quit.setBackground(Color.lightGray);
+        add(quit);
+
+        admin = new JButton("Admin Login");
+        admin.setBounds(850,550,150,75);
         admin.addActionListener(this);
+        admin.setBackground(Color.lightGray);
+        add(admin);
 
-        setLayout(new BorderLayout());
-        panel1=new JPanel();
-        panel3=new JPanel();
-        panel2=new JPanel();
-        panel4=new JPanel();
-
-        panel1.add(label1);
-        panel1.add(username);
-        panel1.add(label2);
-        panel1.add(password);
-        add(panel1,BorderLayout.CENTER);
-
-        panel4.add(login);
-        panel4.add(quit);
-        panel4.add(admin);
-        add(panel4,BorderLayout.SOUTH);
-
-        setSize(640,450);
-        setLocation(600,400);
-        setVisible(true);
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
+        Image i= i1.getImage().getScaledInstance(150,140,Image.SCALE_DEFAULT);
+        ImageIcon i2 = new ImageIcon(i);
+        JLabel image = new JLabel(i2);
+        image.setBounds(600,70,250,250);
+        add(image);
 
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == login) {
+            String userName = username.getText();
+            String pass = new String(password.getPassword());
 
-    }
+            if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
+                JOptionPane.showMessageDialog(this, "Login Successful");
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+            }
+        } else if (e.getSource() == signup) {
+            Registration regFrame = new Registration(userCredentials);
+        } else if (e.getSource() == quit) {
+            System.exit(0);
+        }
+        }
 
     public static void main(String[] args){
         new Main().setVisible(true);
     }
 }
-
