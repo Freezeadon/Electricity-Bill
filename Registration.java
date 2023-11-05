@@ -57,20 +57,22 @@ public class Registration extends JFrame implements ActionListener  {
 
 
 
-    @Override
+   @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == registerButton){
+        if (e.getSource() == registerButton) {
             String newUsername = regUsername.getText();
             String newPass = new String(regPassword.getPassword());
             String confirmPass = new String(confirmPasswordField.getPassword());
 
-            if(!newPass.equals(confirmPass)){
+            if (newUsername.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a username.");
+            } else if (!newPass.equals(confirmPass)) {
                 JOptionPane.showMessageDialog(this, "Passwords do not match. Please try again.");
-            }else if(!userCredentials.containsKey(newUsername)){
+            } else if (!userCredentials.containsKey(newUsername)) {
                 userCredentials.put(newUsername, newPass);
-                JOptionPane.showMessageDialog(this, "Registration Succesful");
-            }else{
+                JOptionPane.showMessageDialog(this, "Registration Successful");
+            } else {
                 JOptionPane.showMessageDialog(this, "Username already exists");
             }
         } else if (e.getSource() == showPasswordButton) {
