@@ -8,7 +8,7 @@ public class Main extends JFrame implements ActionListener{
 
     JTextField username;
     JPasswordField password;
-    JButton login,quit,admin;
+    JButton login,quit,admin,signup;
     private HashMap<String, String> userCredentials;
 
     Main(){
@@ -53,6 +53,12 @@ public class Main extends JFrame implements ActionListener{
         admin.addActionListener(this);
         admin.setBackground(Color.lightGray);
         add(admin);
+
+        signup =  new JButton("New User");
+        signup.setBounds(650,550,150,75);
+        signup.addActionListener(this);
+        signup.setBackground(Color.lightGray);
+        add(signup);
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
         Image i= i1.getImage().getScaledInstance(150,140,Image.SCALE_DEFAULT);
