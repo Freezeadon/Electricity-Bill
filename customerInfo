@@ -1,0 +1,9 @@
+public class customerInfo {
+
+	static void customer(int customerid) { // all users must have a  custom id assigned
+
+        
+		JLabel customerID = new Jlabel;
+		
+	}
+}
