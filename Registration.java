@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+// Could you not just go import javax.swing.*; to import all?
+
 public class Registration extends JFrame implements ActionListener  {
 
    private JLabel regLabel1, regLabel2, regLabel3;
