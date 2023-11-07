@@ -86,8 +86,11 @@ public class Main extends JFrame implements ActionListener{
             Registration regFrame = new Registration(userCredentials);
         } else if (e.getSource() == quit) {
             System.exit(0);
+        } else if (e.getSource() == admin){
+          dispose();
+          //will work on admin when it is done.
         }
-        }
+    }
 
     public static void main(String[] args){
         new Main().setVisible(true);
