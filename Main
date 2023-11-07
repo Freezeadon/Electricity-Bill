@@ -82,6 +82,7 @@ public class Main extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
         } else if (e.getSource() == signup) {
+            dispose();
             Registration regFrame = new Registration(userCredentials);
         } else if (e.getSource() == quit) {
             System.exit(0);
