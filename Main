@@ -43,7 +43,7 @@ public class Main extends JFrame implements ActionListener{
         add(login);
 
         quit = new JButton("Quit");
-        quit.setBounds(450,550,150,75);
+        quit.setBounds(650,650,150,75);
         quit.addActionListener(this);
         quit.setBackground(Color.lightGray);
         add(quit);
@@ -55,7 +55,7 @@ public class Main extends JFrame implements ActionListener{
         add(admin);
 
         signup =  new JButton("New User");
-        signup.setBounds(650,550,150,75);
+        signup.setBounds(450,550,150,75);
         signup.addActionListener(this);
         signup.setBackground(Color.lightGray);
         add(signup);
