@@ -1,9 +1,43 @@
+import javax.swing'*;
+
 public class customerInfo {
-
-	static void customer(int customerid) { // all users must have a  custom id assigned
-
-        
-		JLabel customerID = new Jlabel;
+	private CustomerID[];
+	
+	private CustomerID[1] {
+		int id, meter, offPeak, midPeak, onPeak;
+		id = 1001;
+		meter = 0;
 		
+		// amount of hours at a certain electricity peak
+		offPeak = 5;
+		midPeak = 5;
+		onPeak = 5;
+		
+		// we need to declare the certain rates and prices for different plans
+	}
+
+	static void customer(int custid) { // all users must have a  custom id assigned
+		
+		CustomerID[custid] cID = new CustomerID[custid]; // what im thinking here is we have some class, or so with a list ids for each  so this page acts like a template that is filled out.
+		
+		JFrame customerInfo = new JFrame;
+		
+		
+		private JLabel cusID, meterNum; //north
+		private JLabel offPeak, midPeak, onPeak, del, regCharge, totalElec, hst, ontReb, total; // center
+		
+		cusID = new JLabel("Customer ID: "+ cID.custid);
+		meterNum = new JLabel("Meter Number: "+ customID);
+		
+		//it is currently set up so it does not consider the plan that they are on
+		
+		offPeak = new JLabel("kWh Off Peak \t "+ (cID.onPeak * 8.7) + "¢\n");
+		midPeak = new JLabel("kWh Off Peak \t "+ (cID.onPeak * 12.2) + "¢\n");
+		onPeak = new JLabel("kWh Off Peak \t "+ (cID.onPeak * 18.2) + "¢\n");
+		
+		del = new JLabel("Delivery fee \t "+ (cID.delplan)+ "¢\n"); //not actually calculating anything
+		regCharge = new JLabel("Regulatory Charges \t "+ (cID.reg + "¢\n")); // not actually calculating anything
+		int totalel = cID.delplan; //add other stuff together
+		totalElec = new JLabel("Total Electricity Charges: \t "+ (totalel));
 	}
 }
