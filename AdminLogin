@@ -1,0 +1,58 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AdminLogin extends JFrame implements ActionListener {
+
+    private final JTextField AdminUser;
+    private final JPasswordField AdminPassword;
+
+    JButton login;
+
+    AdminLogin(){
+        super("Zeus Utilities");
+        getContentPane().setBackground(Color.pink);
+        setSize(1000,1000);
+        setDefaultCloseOperation(AdminLogin.EXIT_ON_CLOSE);
+        setLayout(null);
+        setVisible(true);
+
+        JLabel user1 = new JLabel("Admin Username:");
+        user1.setBounds(400,320,200,20);
+        user1.setFont(new Font("New Times Roman",Font.BOLD,20));
+        add(user1);
+
+        AdminUser = new JTextField();
+        AdminUser.setBounds(650,320,150,30);
+        add(AdminUser);
+
+        JLabel pass =new JLabel("Password");
+        pass.setBounds(420,460,100,20);
+        pass.setFont(new Font("New Times Roman",Font.BOLD,20));
+        add(pass);
+
+        AdminPassword = new JPasswordField();
+        AdminPassword.setBounds(650,460,150,30);
+        add(AdminPassword);
+
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("admin.png"));
+        Image i= i1.getImage().getScaledInstance(150,140,Image.SCALE_DEFAULT);
+        ImageIcon i2 = new ImageIcon(i);
+        JLabel image = new JLabel(i2);
+        image.setBounds(600,70,300,300);
+        add(image);
+
+        login = new JButton("Login");
+        login.setBounds(650,550,150,75);
+        login.addActionListener(this);
+        login.setBackground(Color.lightGray);
+        add(login);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    
+    }
+}
