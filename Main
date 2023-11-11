@@ -78,6 +78,8 @@ public class Main extends JFrame implements ActionListener{
 
             if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
+                customerInfo customerinfo = new customerInfo(); // still needs work for unique ID
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
