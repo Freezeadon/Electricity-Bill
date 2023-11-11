@@ -87,8 +87,8 @@ public class Main extends JFrame implements ActionListener{
         } else if (e.getSource() == quit) {
             System.exit(0);
         } else if (e.getSource() == admin){
+          AdminLogin adminLogin = new AdminLogin();
           dispose();
-          //will work on admin when it is done.
         }
     }
 
