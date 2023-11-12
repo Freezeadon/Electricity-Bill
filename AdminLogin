@@ -49,10 +49,19 @@ public class AdminLogin extends JFrame implements ActionListener {
         login.setBackground(Color.lightGray);
         add(login);
 
+        back = new JButton("Return"); //return to the previous screen
+        back.setBounds(650,650,150,75);
+        back.addActionListener(this);
+        back.setBackground(Color.lightGray);
+        add(back);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    
+    if (e.getSource() == back); {
+    new Main().setVisible(true);
+    setVisibile(false);
+    }
     }
 }
