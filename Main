@@ -15,10 +15,11 @@ public class Main extends JFrame implements ActionListener{
     protected HashMap<String, String> userCredentials;
 
     Main(){
-        super("Zeus Utilities");
-        getContentPane().setBackground(Color.pink);
-        setSize(1000,1000);
+        super("Zeus Utilities"); //title of website
+        getContentPane().setBackground(Color.pink); //background color
+        setSize(1000,1000); //size of frame
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
+        setLocationRelative(null);
         setLayout(null);
 
         JLabel user = new JLabel("Username");
@@ -82,24 +83,24 @@ public class Main extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
-            dispose();
             String userName = username.getText();
             String pass = new String(password.getPassword());
 
             if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
+                setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
         } else if (e.getSource() == signup) {
-            dispose();
+            setVisible(false);
             Registration regFrame = new Registration(userCredentials);
         } else if (e.getSource() == quit) {
             System.exit(0);
         }
         else if(e.getSource()==admin){
             AdminLogin adminLogin = new AdminLogin();
-            dispose();
+            setVisible(false);
         }
         }
 
