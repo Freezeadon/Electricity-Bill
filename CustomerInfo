@@ -1,6 +1,6 @@
 import javax.swing'*;
 
-public class customerInfo {
+public class CustomerInfo {
 	private CustomerID[];
 	
 	private CustomerID[1] {
