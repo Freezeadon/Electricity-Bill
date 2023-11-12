@@ -6,10 +6,13 @@ import java.util.HashMap;
 
 public class Main extends JFrame implements ActionListener{
 
-    JTextField username;
-    JPasswordField password;
-    JButton login,quit,admin,signup;
-    private HashMap<String, String> userCredentials;
+    private final JTextField username;
+    private final JPasswordField password;
+    private final JButton login;
+    private final JButton quit;
+    private final JButton admin;
+    private final JButton signup;
+    protected HashMap<String, String> userCredentials;
 
     Main(){
         super("Zeus Utilities");
@@ -36,50 +39,55 @@ public class Main extends JFrame implements ActionListener{
         password.setBounds(650,360,150,30);
         add(password);
 
-        login = new JButton("Login");
+        ImageIcon icon1 = new ImageIcon("src/login.png"); //getting image
+        Image image1=icon1.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT); //scaling the image
+        login = new JButton("Login",new ImageIcon(image1)); //adding image and text on button
         login.setBounds(650,450,150,75);
         login.addActionListener(this);
         login.setBackground(Color.lightGray);
         add(login);
 
-        quit = new JButton("Quit");
+        ImageIcon icon2 = new ImageIcon("src/cancel.png");
+        Image image2=icon2.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT);
+        quit = new JButton("Quit",new ImageIcon(image2));
         quit.setBounds(650,650,150,75);
         quit.addActionListener(this);
         quit.setBackground(Color.lightGray);
         add(quit);
 
-        admin = new JButton("Admin Login");
+        ImageIcon icon3 = new ImageIcon("src/admin.png");
+        Image image3 = icon3.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT);
+        admin = new JButton("Admin Login",new ImageIcon(image3));
         admin.setBounds(850,550,150,75);
         admin.addActionListener(this);
         admin.setBackground(Color.lightGray);
         add(admin);
 
-        signup =  new JButton("New User");
+        ImageIcon icon4 = new ImageIcon("src/newuser.png");
+        Image image4 = icon4.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT);
+        signup =  new JButton("New User",new ImageIcon(image4));
         signup.setBounds(450,550,150,75);
         signup.addActionListener(this);
         signup.setBackground(Color.lightGray);
         add(signup);
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
-        Image i= i1.getImage().getScaledInstance(150,140,Image.SCALE_DEFAULT);
+        Image i= i1.getImage().getScaledInstance(160,150,Image.SCALE_DEFAULT);
         ImageIcon i2 = new ImageIcon(i);
         JLabel image = new JLabel(i2);
         image.setBounds(600,70,250,250);
         add(image);
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
+            dispose();
             String userName = username.getText();
             String pass = new String(password.getPassword());
 
             if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
-                customerInfo customerinfo = new customerInfo(); // still needs work for unique ID
-                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
@@ -88,11 +96,12 @@ public class Main extends JFrame implements ActionListener{
             Registration regFrame = new Registration(userCredentials);
         } else if (e.getSource() == quit) {
             System.exit(0);
-        } else if (e.getSource() == admin){
-          AdminLogin adminLogin = new AdminLogin();
-          dispose();
         }
-    }
+        else if(e.getSource()==admin){
+            AdminLogin adminLogin = new AdminLogin();
+            dispose();
+        }
+        }
 
     public static void main(String[] args){
         new Main().setVisible(true);
