@@ -1,4 +1,26 @@
-public class plans {
+import javax.swing.*;
 
+public class plans {
+	private overCost
+
+	public float overTime;
+	public float totalCost;
+
+	public static void bronze(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
+		
+		private double offPeakPrice = 7.8;
+		private double midPeakPrice = 10.3;
+		private double onPeakPrice = 12.5;
+
+		float totalTime = offPeakTime + midPeakTime + onPeakTime;
+		if (totalTime < 1000) {
+			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+		} else {
+			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			overTime = totalTime - 1000;
+			overCost = overTime * 15;
+		}
+	}
+	
 }
 
