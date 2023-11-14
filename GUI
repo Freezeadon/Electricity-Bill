@@ -1,0 +1,13 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class GUI extends JFrame {
+
+    GUI(){
+        getContentPane().setBackground(Color.pink);
+        setSize(1000,1000);
+        setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+    }
+}
