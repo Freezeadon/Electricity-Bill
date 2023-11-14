@@ -4,24 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class Main extends JFrame implements ActionListener{
+public class Main extends GUI implements ActionListener{
 
-    private final JTextField username;
-    private final JPasswordField password;
+    private  JTextField username;
+    private  JPasswordField password;
     private final JButton login;
     private final JButton quit;
     private final JButton admin;
     private final JButton signup;
-    protected HashMap<String, String> userCredentials;
+    private HashMap<String, String> userCredentials = new HashMap<>();
 
     Main(){
-        super("Zeus Utilities"); //title of website
-        getContentPane().setBackground(Color.pink); //background color
-        setSize(1000,1000); //size of frame
-        setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
-        setLocationRelative(null);
-        setLayout(null);
-
         JLabel user = new JLabel("Username");
         user.setBounds(550,320,100,20);
         user.setFont(new Font("New Times Roman",Font.BOLD,20));
@@ -88,13 +81,15 @@ public class Main extends JFrame implements ActionListener{
 
             if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
+
+                //CustomerInfo custinfo = new CustomerInfo();
                 setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
         } else if (e.getSource() == signup) {
-            setVisible(false);
             Registration regFrame = new Registration(userCredentials);
+            setVisible(false);
         } else if (e.getSource() == quit) {
             System.exit(0);
         }
@@ -107,4 +102,3 @@ public class Main extends JFrame implements ActionListener{
     public static void main(String[] args){
         new Main().setVisible(true);
     }
-}
