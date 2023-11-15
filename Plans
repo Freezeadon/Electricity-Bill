@@ -1,22 +1,25 @@
 import javax.swing.*;
 
-public class plans {
-	private overCost
+public class Plans {
+	private static float overCost;
+	private static double offPeakPrice;
+	private static double midPeakPrice;
+	private static double onPeakPrice;
 
-	public float overTime;
-	public float totalCost;
-
+	public static float overTime;
+	public static float totalCost;
+	
 	public static void bronze(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
 		
-		private double offPeakPrice = 7.8;
-		private double midPeakPrice = 10.3;
-		private double onPeakPrice = 12.5;
+		offPeakPrice = 7.8;
+		midPeakPrice = 10.3;
+		onPeakPrice = 12.5;
 
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 		if (totalTime < 1000) {
-			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
 		} else {
-			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
 			overTime = totalTime - 1000;
 			overCost = overTime * 20;
 		}
@@ -24,30 +27,31 @@ public class plans {
 
 	public static void silver(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
 		
-		private double offPeakPrice = 10.3;
-		private double midPeakPrice = 12.5;
-		private double onPeakPrice = 15.3;
+		offPeakPrice = 10.3;
+		midPeakPrice = 12.5;
+		onPeakPrice = 15.3;
 
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 		if (totalTime < 3000) {
-			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
 		} else {
-			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
 			overTime = totalTime - 3000;
 			overCost = overTime * 25;
 		}
 	}
 
-	public static void silver(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
+	public static void gold(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
 		
-		private double offPeakPrice = 15.3;
-		private double midPeakPrice = 20;
-		private double onPeakPrice = 22.5;
+		offPeakPrice = 15.3;
+		midPeakPrice = 20;
+		onPeakPrice = 22.5;
 
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 
-		totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
-		}
+		totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
 	}
 }
+
+
 
