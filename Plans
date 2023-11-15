@@ -18,9 +18,36 @@ public class plans {
 		} else {
 			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
 			overTime = totalTime - 1000;
-			overCost = overTime * 15;
+			overCost = overTime * 20;
 		}
 	}
-	
+
+	public static void silver(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
+		
+		private double offPeakPrice = 10.3;
+		private double midPeakPrice = 12.5;
+		private double onPeakPrice = 15.3;
+
+		float totalTime = offPeakTime + midPeakTime + onPeakTime;
+		if (totalTime < 3000) {
+			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+		} else {
+			totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+			overTime = totalTime - 3000;
+			overCost = overTime * 25;
+		}
+	}
+
+	public static void silver(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
+		
+		private double offPeakPrice = 15.3;
+		private double midPeakPrice = 20;
+		private double onPeakPrice = 22.5;
+
+		float totalTime = offPeakTime + midPeakTime + onPeakTime;
+
+		totalCost = (offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice);
+		}
+	}
 }
 
