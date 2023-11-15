@@ -82,8 +82,7 @@ public class Main extends GUI implements ActionListener{
 
             if (userCredentials.containsKey(userName) && userCredentials.get(userName).equals(pass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
-
-                //CustomerInfo custinfo = new CustomerInfo();
+                CustomerInfo custinfo = new CustomerInfo();
                 setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
