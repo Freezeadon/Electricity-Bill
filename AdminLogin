@@ -11,6 +11,7 @@ public class AdminLogin extends GUI implements ActionListener {
     private final JButton adlogin,back;
 
     AdminLogin(){
+        setTitle("Admin Login");
         JLabel user1 = new JLabel("Admin Username:");
         user1.setBounds(400,320,200,20);
         user1.setFont(new Font("New Times Roman",Font.BOLD,20));
