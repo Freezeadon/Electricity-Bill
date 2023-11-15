@@ -15,6 +15,7 @@ public class Main extends GUI implements ActionListener{
     private HashMap<String, String> userCredentials = new HashMap<>();
 
     Main(){
+        setTitle("Zeus Utilises");
         JLabel user = new JLabel("Username");
         user.setBounds(550,320,100,20);
         user.setFont(new Font("New Times Roman",Font.BOLD,20));
