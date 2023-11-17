@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Random;
 
-public class Registration extends GUI implements ActionListener {
+public class Registration extends JFrame implements ActionListener {
 
-    private JLabel regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7;
+    private JLabel regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8;
     private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField;
     private JPasswordField regPassword, confirmPasswordField;
     private JButton registerButton, showPasswordButton;
@@ -15,7 +15,7 @@ public class Registration extends GUI implements ActionListener {
     private Main loginPage; // instance of the login page to go back to after registering
 
     Registration(Main loginPage) {
-        super("Registration"); 
+        super("Registration");
         this.loginPage = loginPage;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -25,7 +25,8 @@ public class Registration extends GUI implements ActionListener {
         regLabel4 = new JLabel("First Name");
         regLabel5 = new JLabel("Last Name");
         regLabel6 = new JLabel("Address");
-        regLabel7 = new JLabel("Phone Number");
+        regLabel7 = new JLabel("Postal Code");
+        regLabel8 = new JLabel("Phone Number");
 
         regUsername = new JTextField(10);
         regPassword = new JPasswordField(10);
@@ -43,7 +44,7 @@ public class Registration extends GUI implements ActionListener {
         showPasswordButton.addActionListener(this);
 
         regPanel = new JPanel();
-        regPanel.setLayout(new GridLayout(8, 2));
+        regPanel.setLayout(new GridLayout(9, 2));
         regPanel.add(regLabel1);
         regPanel.add(regUsername);
         regPanel.add(regLabel2);
@@ -57,6 +58,8 @@ public class Registration extends GUI implements ActionListener {
         regPanel.add(regLabel6);
         regPanel.add(addressField);
         regPanel.add(regLabel7);
+        regPanel.add(postalCodeField); 
+        regPanel.add(regLabel8);
         regPanel.add(phoneNumberField);
         regPanel.add(registerButton);
         regPanel.add(showPasswordButton);
