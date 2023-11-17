@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 
 public class Plans {
@@ -5,9 +7,13 @@ public class Plans {
 	private static double offPeakPrice;
 	private static double midPeakPrice;
 	private static double onPeakPrice;
-
+	
+	public static double deliveryPrice;
+	public static double regulatoryCharge;
 	public static float overTime;
 	public static float totalCost;
+	public static float hst;
+	public static float total;
 	
 	public static void bronze(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
 		
@@ -15,6 +21,9 @@ public class Plans {
 		midPeakPrice = 10.3;
 		onPeakPrice = 12.5;
 
+		deliveryPrice = 10;
+		regulatoryCharge = 15;
+		
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 		if (totalTime < 1000) {
 			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
@@ -23,6 +32,11 @@ public class Plans {
 			overTime = totalTime - 1000;
 			overCost = overTime * 20;
 		}
+		
+		hst = (float) (totalCost + overCost * 0.13);
+		
+		total = totalCost + hst;
+		
 	}
 
 	public static void silver(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
@@ -31,6 +45,9 @@ public class Plans {
 		midPeakPrice = 12.5;
 		onPeakPrice = 15.3;
 
+		deliveryPrice = 15;
+		regulatoryCharge = 15;
+		
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 		if (totalTime < 3000) {
 			totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
@@ -39,6 +56,11 @@ public class Plans {
 			overTime = totalTime - 3000;
 			overCost = overTime * 25;
 		}
+		
+		hst = (float) (totalCost + overCost * 0.13);
+		
+		total = totalCost + hst;
+		
 	}
 
 	public static void gold(int offPeakTime, int midPeakTime, int onPeakTime) { //input offpeak, midpeak, and on peak times to calculate total prices
@@ -47,9 +69,17 @@ public class Plans {
 		midPeakPrice = 20;
 		onPeakPrice = 22.5;
 
+		deliveryPrice = 20;
+		regulatoryCharge = 15;
+		
 		float totalTime = offPeakTime + midPeakTime + onPeakTime;
 
 		totalCost = (float) ((offPeakTime * offPeakPrice) + (midPeakTime * midPeakPrice) + (onPeakTime * onPeakPrice));
+		
+		hst = (float) (totalCost + overCost * 0.13);
+		
+		total = totalCost + hst;
+		
 	}
 }
 
