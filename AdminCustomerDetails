@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.table.*;
+
+public class AdminCustomerDetails {
+   AdminCustomerDetails(){
+        String inputFileName = "user_data.csv";
+        File inputFile = new File(inputFileName);
+        Vector<Vector<String>> vectorVectorStringsData = new Vector<>();
+        Vector<String> vectorColumnIdentifiers = new Vector<>();
+        DefaultTableModel model = new DefaultTableModel();
+        JTable jTable;
+
+        try (FileReader fr = new FileReader(inputFile);
+             BufferedReader br = new BufferedReader(fr)) {
+            // Read and set headers
+                String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Phone Number", "Email", "Plan"};
+                vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
+
+            // Add headers to the data vector
+            vectorVectorStringsData.add(vectorColumnIdentifiers);
+
+            // Read data rows
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] dataRow = line.split(",");
+                vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
+            }
+        } catch (IOException ioe) {
+            System.out.println("Error: " + ioe.getMessage());
+        }
+
+        // Set the data and column identifiers to the table model
+        model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
+
+        // Create the table with the model
+        jTable = new JTable(model);
+
+        // Create a JFrame to display the table
+        JFrame frame = new JFrame("CSV Data");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new JScrollPane(jTable));
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
