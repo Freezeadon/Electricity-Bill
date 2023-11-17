@@ -1,48 +1,115 @@
-import java.io.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Vector;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 
-public class AdminCustomerDetails {
-   AdminCustomerDetails(){
-        String inputFileName = "user_data.csv";
+public class AdminCustomerDetails extends JFrame implements ActionListener {
+
+    private JTable table;
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenuItem signout, quit;
+
+    public AdminCustomerDetails() {
+        super("Customer Details");
+
+        // Initialize components
+        initializeComponents();
+
+        // Read data from CSV and populate the table
+        populateTableFromCSV("user_data.csv");
+
+        // Create a panel to center the table
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(Box.createHorizontalGlue());
+        panel.add(new JScrollPane(table));
+        panel.add(Box.createHorizontalGlue());
+        panel.setBackground(Color.PINK);
+
+        // Add the panel to the frame
+        add(panel);
+
+        // Set preferred size to ensure the frame has a reasonable size
+        setPreferredSize(new Dimension(800, 600));
+
+        // Center the JFrame on the screen
+        pack();
+        setLocationRelativeTo(null);
+
+        setVisible(true);
+    }
+
+    private void initializeComponents() {
+        // Creating a menubar
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+
+        signout = new JMenuItem("Sign-Out");
+        quit = new JMenuItem("Quit");
+
+        signout.addActionListener(this);
+        quit.addActionListener(this);
+
+        file.add(signout);
+        file.add(quit);
+
+        menuBar.add(file);
+        setJMenuBar(menuBar);
+
+        // Create the table with an empty model
+        table = new JTable(new DefaultTableModel());
+        table.setDefaultEditor(Object.class, null); // Make the JTable uneditable
+    }
+
+    private void populateTableFromCSV(String inputFileName) {
         File inputFile = new File(inputFileName);
         Vector<Vector<String>> vectorVectorStringsData = new Vector<>();
         Vector<String> vectorColumnIdentifiers = new Vector<>();
-        DefaultTableModel model = new DefaultTableModel();
-        JTable Table;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
 
         try (FileReader fr = new FileReader(inputFile);
              BufferedReader br = new BufferedReader(fr)) {
+
             // Read and set headers
             String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Phone Number", "Email", "Plan"};
             vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
 
-// Read data rows
+            // Read data rows
             String line;
             while ((line = br.readLine()) != null) {
                 String[] dataRow = line.split(",");
                 vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
             }
 
-// Set the data and column identifiers to the table model
+            // Set the data and column identifiers to the table model
             model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
 
         } catch (IOException ioe) {
             System.out.println("Error: " + ioe.getMessage());
         }
-
-        // Set the data and column identifiers to the table model
-        model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
-
-        // Create the table with the model
-        Table = new JTable(model);
-
-        // Create a JFrame to display the table
-        JFrame frame = new JFrame("Customer Data");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new JScrollPane(Table));
-        frame.pack();
-        frame.setVisible(true);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == signout) {
+            int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign out?");
+            if (confirmed == JOptionPane.YES_OPTION) {
+                AdminLogin adminLogin = new AdminLogin();
+                dispose();
+            }
+        } else if (e.getSource() == quit) {
+            System.exit(0);
+        }
+    }
+
 }
+
