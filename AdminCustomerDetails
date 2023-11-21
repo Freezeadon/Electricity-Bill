@@ -53,7 +53,7 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
         menuBar = new JMenuBar();
         file = new JMenu("File");
 
-        signout = new JMenuItem("Sign-Out");
+        signout = new JMenuItem("Sign Out");
         quit = new JMenuItem("Quit");
 
         signout.addActionListener(this);
@@ -83,13 +83,22 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
             String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Phone Number", "Email", "Plan"};
             vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
 
+            int columnRemove = vectorColumnIdentifiers.indexOf("Password");
+
             // Read data rows
             String line;
             while ((line = br.readLine()) != null) {
                 String[] dataRow = line.split(",");
+                // Remove the column you want to hide (e.g., "Password")
+                int columnIndexToHide = Arrays.asList(columnIdentifiers).indexOf("Password");
+                if (columnIndexToHide >= 0 && columnIndexToHide < dataRow.length) {
+                    // Remove the element at the specified index
+                    dataRow = removeElement(dataRow, columnIndexToHide);
+                    vectorColumnIdentifiers.remove(columnRemove);
+                }
                 vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
             }
-
+            
             // Set the data and column identifiers to the table model
             model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
 
@@ -97,7 +106,12 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
             System.out.println("Error: " + ioe.getMessage());
         }
     }
-
+    private String[] removeElement(String[] array, int index) {
+        String[] newArray = new String[array.length - 1];
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
+        return newArray;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signout) {
@@ -106,10 +120,11 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
                 AdminLogin adminLogin = new AdminLogin();
                 dispose();
             }
-        } else if (e.getSource() == quit) {
+        } else if (e.getSource() == quit) { //Exit from Program
             System.exit(0);
         }
     }
 
 }
+
 
