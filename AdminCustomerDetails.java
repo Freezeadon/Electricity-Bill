@@ -80,7 +80,7 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
              BufferedReader br = new BufferedReader(fr)) {
 
             // Read and set headers
-            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Phone Number", "Email", "Plan"};
+            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Postal Code","Phone Number", "Email", "Plan"};
             vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
 
             int columnRemove = vectorColumnIdentifiers.indexOf("Password");
