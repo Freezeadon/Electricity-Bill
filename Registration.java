@@ -7,10 +7,11 @@ import java.util.Random;
 
 public class Registration extends JFrame implements ActionListener {
 
-    private JLabel regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8;
-    private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField;
+    private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8;
+    private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField,
+            regEmail;
     private JPasswordField regPassword, confirmPasswordField;
-    private JButton registerButton, showPasswordButton;
+    private JButton registerButton, showPasswordButton, backButton;
     private JPanel regPanel;
     private Main loginPage; // instance of the login page to go back to after registering
 
@@ -18,7 +19,9 @@ public class Registration extends JFrame implements ActionListener {
         super("Registration");
         this.loginPage = loginPage;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
+        regLabel0 = new JLabel("Email Address");
         regLabel1 = new JLabel("New User Name");
         regLabel2 = new JLabel("New Password");
         regLabel3 = new JLabel("Confirm Password");
@@ -28,6 +31,7 @@ public class Registration extends JFrame implements ActionListener {
         regLabel7 = new JLabel("Postal Code");
         regLabel8 = new JLabel("Phone Number");
 
+        regEmail = new JTextField(10);
         regUsername = new JTextField(10);
         regPassword = new JPasswordField(10);
         confirmPasswordField = new JPasswordField(10);
@@ -39,12 +43,98 @@ public class Registration extends JFrame implements ActionListener {
 
         registerButton = new JButton("Register");
         showPasswordButton = new JButton("Show Password");
+        backButton = new JButton("Back");
+
+        // font for labels
+        Font newLabelFont = new Font("SansSerif", Font.BOLD, 15);
+        regLabel0.setFont(newLabelFont);
+        regLabel1.setFont(newLabelFont);
+        regLabel2.setFont(newLabelFont);
+        regLabel3.setFont(newLabelFont);
+        regLabel4.setFont(newLabelFont);
+        regLabel5.setFont(newLabelFont);
+        regLabel6.setFont(newLabelFont);
+        regLabel7.setFont(newLabelFont);
+        regLabel8.setFont(newLabelFont);
+
+        // font for textfields
+        Font newFieldFont = new Font("SansSerif", Font.PLAIN, 14);
+        regEmail.setFont(newFieldFont);
+        regUsername.setFont(newFieldFont);
+        regPassword.setFont(newFieldFont);
+        confirmPasswordField.setFont(newFieldFont);
+        firstNameField.setFont(newFieldFont);
+        lastNameField.setFont(newFieldFont);
+        addressField.setFont(newFieldFont);
+        postalCodeField.setFont(newFieldFont);
+        phoneNumberField.setFont(newFieldFont);
+
+        // font for buttons
+        Font newButtonFont = new Font("SansSerif", Font.BOLD, 15);
+        registerButton.setFont(newButtonFont);
+        showPasswordButton.setFont(newButtonFont);
+        backButton.setFont(newButtonFont);
 
         registerButton.addActionListener(this);
         showPasswordButton.addActionListener(this);
+        backButton.addActionListener(this);
 
         regPanel = new JPanel();
-        regPanel.setLayout(new GridLayout(9, 2));
+        regPanel.setLayout(null);
+        regPanel.setBackground(Color.PINK); // set background color to pink
+
+        // Auto sets x and y for all labels and text fields, gap is used as something
+        // that will be added to y to make a gap for the next set of labels and text
+        // fields
+        int labelX = 130; // x value fo regLabels
+        int textFieldX = 300; // x value for textfields
+        int textFieldWidth = 200; // width value for text fields
+        int y = 50; // y value for both regLabels and textfields
+        int gap = 30;
+
+        regLabel0.setBounds(labelX, y, 150, 30);
+        regEmail.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap; // changes y value onwards
+
+        regLabel1.setBounds(labelX, y, 150, 30);
+        regUsername.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel2.setBounds(labelX, y, 150, 30);
+        regPassword.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel3.setBounds(labelX, y, 150, 30);
+        confirmPasswordField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel4.setBounds(labelX, y, 150, 30);
+        firstNameField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel5.setBounds(labelX, y, 150, 30);
+        lastNameField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel6.setBounds(labelX, y, 150, 30);
+        addressField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel7.setBounds(labelX, y, 150, 30);
+        postalCodeField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap;
+
+        regLabel8.setBounds(labelX, y, 150, 30);
+        phoneNumberField.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap * 2;
+
+        registerButton.setBounds(130, y, 150, 30);
+        showPasswordButton.setBounds(300, y, 200, 30);
+
+        backButton.setBounds(250, y + 2 * gap, 100, 30);
+
+        regPanel.add(regLabel0);
+        regPanel.add(regEmail);
         regPanel.add(regLabel1);
         regPanel.add(regUsername);
         regPanel.add(regLabel2);
@@ -58,11 +148,12 @@ public class Registration extends JFrame implements ActionListener {
         regPanel.add(regLabel6);
         regPanel.add(addressField);
         regPanel.add(regLabel7);
-        regPanel.add(postalCodeField); 
+        regPanel.add(postalCodeField);
         regPanel.add(regLabel8);
         regPanel.add(phoneNumberField);
         regPanel.add(registerButton);
         regPanel.add(showPasswordButton);
+        regPanel.add(backButton);
 
         add(regPanel);
 
@@ -71,7 +162,7 @@ public class Registration extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    //method to check if username already exists in the database
+    // method to check if username already exists in the database
     private boolean usernameVerify(String usernameCheck) {
         try (BufferedReader br = new BufferedReader(new FileReader("user_data.csv"))) {
             String line;
@@ -90,9 +181,43 @@ public class Registration extends JFrame implements ActionListener {
         return false; // if false username does not exist
     }
 
+    private int generateRandomCustomerId() {
+        Random random = new Random();
+        return 10000 + random.nextInt(90000); // Generate a random 5-digit customer ID
+    }
+
+    // writing to CSV file
+    private void writeUserDataToCSV(int customerId, String username, String password, String firstName, String lastName,
+            String address,
+            String postalCode, String phoneNumber, String emailAddress) {
+        try (FileWriter fileWriter = new FileWriter("user_data.csv", true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+
+            // add user data to the CSV file
+            printWriter.println(customerId + "," + username + "," + password + "," +
+                    firstName + "," + lastName + "," + address + "," +
+                    postalCode + "," + phoneNumber + "," + emailAddress);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registerButton) {
+            if (regEmail.getText().isEmpty() || regUsername.getText().isEmpty() ||
+                    new String(regPassword.getPassword()).isEmpty() ||
+                    new String(confirmPasswordField.getPassword()).isEmpty() ||
+                    firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty() ||
+                    addressField.getText().isEmpty() || postalCodeField.getText().isEmpty() ||
+                    phoneNumberField.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
+                return; // Exit the method if any field is empty
+            }
+            String emailAddress = regEmail.getText();
             String newUsername = regUsername.getText();
             String newPass = new String(regPassword.getPassword());
             String confirmPass = new String(confirmPasswordField.getPassword());
@@ -109,15 +234,17 @@ public class Registration extends JFrame implements ActionListener {
             } else {
                 // Generate a unique customer ID and store it in the CSV file
                 int randomCustomerId = generateRandomCustomerId();
-                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode, phoneNumber);
+                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode,
+                        phoneNumber, emailAddress);
 
                 JOptionPane.showMessageDialog(this, "Registration Successful");
                 this.dispose();
-                //return to login page
+                // return to login page
                 loginPage.setVisible(true);
             }
+
         } else if (e.getSource() == showPasswordButton) {
-            //logic to show password
+            // logic to show password
             if (showPasswordButton.getText().equals("Show Password")) {
                 regPassword.setEchoChar((char) 0);
                 confirmPasswordField.setEchoChar((char) 0);
@@ -127,28 +254,13 @@ public class Registration extends JFrame implements ActionListener {
                 confirmPasswordField.setEchoChar('\u2022');
                 showPasswordButton.setText("Show Password");
             }
+            
+        } else if (e.getSource() == backButton) {
+            // Dispose of the current registration frame
+            dispose();
+            // Make the login page visible
+            loginPage.setVisible(true);
         }
     }
 
-    private int generateRandomCustomerId() {
-        Random random = new Random();
-        return 10000 + random.nextInt(90000); // Generate a random 5-digit customer ID
-    }
-
-    //writing to CSV file
-    private void writeUserDataToCSV(int customerId, String username, String password, String firstName, String lastName, String address,
-            String postalCode, String phoneNumber) {
-        try (FileWriter fileWriter = new FileWriter("user_data.csv", true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
-
-            // add user data to the CSV file
-            printWriter.println(customerId + "," + username + "," + password + "," +
-                    firstName + "," + lastName + "," + address + "," +
-                    postalCode + "," + phoneNumber);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
 }
