@@ -7,13 +7,13 @@ import java.util.Random;
 
 public class Registration extends JFrame implements ActionListener {
 
-    private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8;
-    private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField,
-            regEmail;
+    private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8, regLabel9;
+    private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField, regEmail;
     private JPasswordField regPassword, confirmPasswordField;
     private JButton registerButton, showPasswordButton, backButton;
     private JPanel regPanel;
     private Main loginPage; // instance of the login page to go back to after registering
+    private JComboBox<String> plans;
 
     Registration(Main loginPage) {
         super("Registration");
@@ -30,6 +30,8 @@ public class Registration extends JFrame implements ActionListener {
         regLabel6 = new JLabel("Address");
         regLabel7 = new JLabel("Postal Code");
         regLabel8 = new JLabel("Phone Number");
+        regLabel9 = new JLabel("Membership Option");
+        
 
         regEmail = new JTextField(10);
         regUsername = new JTextField(10);
@@ -56,6 +58,10 @@ public class Registration extends JFrame implements ActionListener {
         regLabel6.setFont(newLabelFont);
         regLabel7.setFont(newLabelFont);
         regLabel8.setFont(newLabelFont);
+        regLabel9.setFont(newLabelFont);
+
+        String[] options = {"Bronze", "Gold"};
+        plans = new JComboBox<>(options);
 
         // font for textfields
         Font newFieldFont = new Font("SansSerif", Font.PLAIN, 14);
@@ -68,6 +74,8 @@ public class Registration extends JFrame implements ActionListener {
         addressField.setFont(newFieldFont);
         postalCodeField.setFont(newFieldFont);
         phoneNumberField.setFont(newFieldFont);
+        plans.setFont(newFieldFont);
+
 
         // font for buttons
         Font newButtonFont = new Font("SansSerif", Font.BOLD, 15);
@@ -78,6 +86,7 @@ public class Registration extends JFrame implements ActionListener {
         registerButton.addActionListener(this);
         showPasswordButton.addActionListener(this);
         backButton.addActionListener(this);
+        plans.setSelectedIndex(0);
 
         regPanel = new JPanel();
         regPanel.setLayout(null);
@@ -126,12 +135,18 @@ public class Registration extends JFrame implements ActionListener {
 
         regLabel8.setBounds(labelX, y, 150, 30);
         phoneNumberField.setBounds(textFieldX, y, textFieldWidth, 30);
-        y += gap * 2;
+        y += gap;
+
+        regLabel9.setBounds(labelX, y, 150, 30);
+        plans = new JComboBox<>(new String[]{"Bronze", "Gold"});
+        plans.setFont(newFieldFont);
+        plans.setBounds(textFieldX, y, textFieldWidth, 30);
+        y += gap * 1.5;
 
         registerButton.setBounds(130, y, 150, 30);
         showPasswordButton.setBounds(300, y, 200, 30);
 
-        backButton.setBounds(250, y + 2 * gap, 100, 30);
+        backButton.setBounds(250, y + 40, 100, 30);
 
         regPanel.add(regLabel0);
         regPanel.add(regEmail);
@@ -151,6 +166,8 @@ public class Registration extends JFrame implements ActionListener {
         regPanel.add(postalCodeField);
         regPanel.add(regLabel8);
         regPanel.add(phoneNumberField);
+        regPanel.add(regLabel9);
+        regPanel.add(plans);
         regPanel.add(registerButton);
         regPanel.add(showPasswordButton);
         regPanel.add(backButton);
@@ -171,14 +188,14 @@ public class Registration extends JFrame implements ActionListener {
                 if (userData.length >= 2) {
                     String storedUsername = userData[1].trim();
                     if (storedUsername.equalsIgnoreCase(usernameCheck)) {
-                        return true; // if true username exists
+                        return true;
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; // if false username does not exist
+        return false;
     }
 
     private int generateRandomCustomerId() {
@@ -188,8 +205,7 @@ public class Registration extends JFrame implements ActionListener {
 
     // writing to CSV file
     private void writeUserDataToCSV(int customerId, String username, String password, String firstName, String lastName,
-            String address,
-            String postalCode, String phoneNumber, String emailAddress) {
+            String address, String postalCode, String phoneNumber, String emailAddress, String plans) {
         try (FileWriter fileWriter = new FileWriter("user_data.csv", true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
@@ -197,7 +213,7 @@ public class Registration extends JFrame implements ActionListener {
             // add user data to the CSV file
             printWriter.println(customerId + "," + username + "," + password + "," +
                     firstName + "," + lastName + "," + address + "," +
-                    postalCode + "," + phoneNumber + "," + emailAddress);
+                    postalCode + "," + phoneNumber + "," + emailAddress + "," + plans);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -226,6 +242,8 @@ public class Registration extends JFrame implements ActionListener {
             String address = addressField.getText();
             String postalCode = postalCodeField.getText();
             String phoneNumber = phoneNumberField.getText();
+            String options = (String) plans.getSelectedItem();
+
 
             if (usernameVerify(newUsername)) {
                 JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
@@ -235,7 +253,7 @@ public class Registration extends JFrame implements ActionListener {
                 // Generate a unique customer ID and store it in the CSV file
                 int randomCustomerId = generateRandomCustomerId();
                 writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode,
-                        phoneNumber, emailAddress);
+                        phoneNumber, emailAddress, options);
 
                 JOptionPane.showMessageDialog(this, "Registration Successful");
                 this.dispose();
@@ -254,7 +272,7 @@ public class Registration extends JFrame implements ActionListener {
                 confirmPasswordField.setEchoChar('\u2022');
                 showPasswordButton.setText("Show Password");
             }
-            
+
         } else if (e.getSource() == backButton) {
             // Dispose of the current registration frame
             dispose();
