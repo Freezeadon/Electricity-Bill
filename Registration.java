@@ -198,6 +198,25 @@ public class Registration extends JFrame implements ActionListener {
         return false;
     }
 
+    // method to check if email already exists in the database
+    private boolean emailVerify(String emailCheck) {
+        try (BufferedReader br = new BufferedReader(new FileReader("user_data.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(",");
+                if (userData.length >= 9) {
+                    String storedEmail = userData[8].trim(); 
+                    if (storedEmail.equalsIgnoreCase(emailCheck)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private int generateRandomCustomerId() {
         Random random = new Random();
         return 10000 + random.nextInt(90000); // Generate a random 5-digit customer ID
@@ -247,14 +266,14 @@ public class Registration extends JFrame implements ActionListener {
 
             if (usernameVerify(newUsername)) {
                 JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
+            }else if (emailVerify(emailAddress)) {
+                JOptionPane.showMessageDialog(this, "Email is associated with another user. Please choose a different email.");
             } else if (!newPass.equals(confirmPass)) {
                 JOptionPane.showMessageDialog(this, "Passwords do not match. Please try again.");
             } else {
                 // Generate a unique customer ID and store it in the CSV file
                 int randomCustomerId = generateRandomCustomerId();
-                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode,
-                        phoneNumber, emailAddress, options);
-
+                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode, phoneNumber, emailAddress, options);
                 JOptionPane.showMessageDialog(this, "Registration Successful");
                 this.dispose();
                 // return to login page
