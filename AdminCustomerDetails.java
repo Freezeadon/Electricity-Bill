@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -11,7 +10,7 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class AdminCustomerDetails extends JFrame implements ActionListener {
+public class AdminCustomerDetails extends GUI implements ActionListener {
 
     private JTable table;
     private JMenuBar menuBar;
@@ -29,23 +28,15 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
 
         // Create a panel to center the table
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(Box.createHorizontalGlue());
-        panel.add(new JScrollPane(table));
-        panel.add(Box.createHorizontalGlue());
-        panel.setBackground(Color.PINK);
-
+        setLayout(new BorderLayout());
         // Add the panel to the frame
-        add(panel);
-
-        // Set preferred size to ensure the frame has a reasonable size
-        setPreferredSize(new Dimension(800, 600));
+        add(new JScrollPane(table),BorderLayout.CENTER);
 
         // Center the JFrame on the screen
-        pack();
         setLocationRelativeTo(null);
 
         setVisible(true);
+
     }
 
     private void initializeComponents() {
@@ -80,7 +71,7 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
              BufferedReader br = new BufferedReader(fr)) {
 
             // Read and set headers
-            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Postal Code","Phone Number", "Email", "Plan"};
+            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address","Postal Code", "Phone Number", "Email", "Plan"};
             vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
 
             int columnRemove = vectorColumnIdentifiers.indexOf("Password");
@@ -98,12 +89,12 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
                 }
                 vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
             }
-            
+
             // Set the data and column identifiers to the table model
             model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
 
         } catch (IOException ioe) {
-            System.out.println("Error: " + ioe.getMessage());
+            System.out.println("Error");
         }
     }
     private String[] removeElement(String[] array, int index) {
@@ -112,6 +103,7 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
         System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
         return newArray;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signout) {
@@ -126,5 +118,7 @@ public class AdminCustomerDetails extends JFrame implements ActionListener {
     }
 
 }
+
+
 
 
