@@ -60,7 +60,7 @@ public class Registration extends JFrame implements ActionListener {
         regLabel8.setFont(newLabelFont);
         regLabel9.setFont(newLabelFont);
 
-        String[] options = {"Bronze", "Gold"};
+        String[] options = {"Bronze", "Silver","Gold"};
         plans = new JComboBox<>(options);
 
         // font for textfields
@@ -138,7 +138,7 @@ public class Registration extends JFrame implements ActionListener {
         y += gap;
 
         regLabel9.setBounds(labelX, y, 150, 30);
-        plans = new JComboBox<>(new String[]{"Bronze", "Gold"});
+        plans = new JComboBox<>(new String[]{"Bronze", "Silver", "Gold"});
         plans.setFont(newFieldFont);
         plans.setBounds(textFieldX, y, textFieldWidth, 30);
         y += gap * 1.5;
