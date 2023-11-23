@@ -92,7 +92,7 @@ public class AdminLogin extends GUI implements ActionListener {
             if (userVerify(adminuser, adminpass)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
                 dispose();
-                Admin admin = new Admin();
+            AdminCustomerDetails adminCustomerDetails = new AdminCustomerDetails();
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrect Username or Password");
             }
