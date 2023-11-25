@@ -1,6 +1,6 @@
 package main;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 import javax.swing.*;
 
 import java.io.BufferedReader;
@@ -10,6 +10,8 @@ import java.util.List;
 
 public class CustomerInfo extends GUI {
 
+	private static JPanel customerPanel;
+	
 	private static JPanel Info;
 	private static JLabel idLabel, meterNumLabel, offPeakLabel, midPeakLabel, onPeakLabel, deliveryLabel, regCharge, totalElecLabel, hstLabel, totalLabel;
 	
@@ -53,8 +55,8 @@ public class CustomerInfo extends GUI {
         				
         				electricityPlan.calculateTotalCost(offPeak, midPeak, onPeak);
         				
-        				deliveryLabel = new JLabel("Delivery fee \t "+ electricityPlan.deliveryPrice + "¢\n"); //not actually calculating anything
-                		regCharge = new JLabel("Regulatory Charges \t "+ electricityPlan.regulatoryCharge + "¢\n"); // not actually calculating anything
+        				deliveryLabel = new JLabel("Delivery fee \t "+ electricityPlan.deliveryPrice + "¢\n");
+        				regCharge = new JLabel("Regulatory Charges \t "+ electricityPlan.regulatoryCharge + "¢\n");
                 		totalElecLabel = new JLabel("Total Electricity Charges: \t "+ electricityPlan.totalCost + "¢\n");
                 		
                 		hstLabel = new JLabel ("H.S.T. \t" + electricityPlan.hst +"¢\n");
@@ -90,7 +92,16 @@ public class CustomerInfo extends GUI {
                 		totalLabel = new JLabel ("TOTAL \t" + electricityPlan.total + "¢");
         			}
         		}
-        		
+        		Info.add(deliveryLabel);
+        		Info.add(regCharge);
+        		Info.add(totalElecLabel);
+        		Info.add(hstLabel);
+        		Info.add(totalLabel);
+
+                Info.setSize(600, 500);
+                Info.setLocation(null);
+                Info.setVisible(true);
+                
             }
 
             // Handle the case where the target value is not found
