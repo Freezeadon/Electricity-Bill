@@ -56,6 +56,7 @@ public class AdminLogin extends GUI implements ActionListener {
         back.setBackground(Color.lightGray);
         add(back);
 
+        setLayout(null);
         setVisible(true);
     }
     private boolean userVerify(String adminuser, String adminpass) {
