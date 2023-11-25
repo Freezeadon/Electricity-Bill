@@ -73,6 +73,9 @@ public class Main extends GUI implements ActionListener {
         JLabel image = new JLabel(i2);
         image.setBounds(600, 70, 250, 250);
         add(image);
+        
+        setLayout(null);
+
     }
 
     // method to verify user exists in database
