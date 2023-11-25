@@ -15,7 +15,5 @@ public class GUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(null);
-        setResizable(false);
     }
 }
