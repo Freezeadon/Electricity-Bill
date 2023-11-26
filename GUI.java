@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI extends JFrame {
+public abstract class GUI extends JFrame {
 
     GUI(String title){
         super(title);
@@ -12,8 +12,7 @@ public class GUI extends JFrame {
             e.printStackTrace();
         }
         getContentPane().setBackground(Color.pink);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
     }
+    protected abstract void initializeComponents();
 }
