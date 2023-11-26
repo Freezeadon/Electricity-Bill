@@ -1,102 +1,120 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Vector;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
-public class AdminLogin extends GUI implements ActionListener {
+public class AdminCustomerDetails extends GUI implements ActionListener {
 
-    private final JTextField adminUser;
-    private final JPasswordField adminPassword;
+    private JTable table;
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenuItem signout, quit;
 
-    private final JButton adlogin,back;
+    public AdminCustomerDetails() {
+        super("Customer Details");
+        initializeComponents();
+        setSize(1000,1000);
+        setLocationRelativeTo(null);
 
-    AdminLogin(){
-        super("Admin login");
-        JLabel user1 = new JLabel("Admin Username:");
-        user1.setBounds(400,320,200,20);
-        user1.setFont(new Font("New Times Roman",Font.BOLD,20));
-        add(user1);
+        // Read data from CSV and populate the table
+        populateTableFromCSV("user_data.csv");
 
-        adminUser = new JTextField();
-        adminUser.setBounds(650,320,150,30);
-        add(adminUser);
+        // Create a panel to center the table
+        JPanel panel = new JPanel();
+        setLayout(new BorderLayout());
+        // Add the panel to the frame
+        add(new JScrollPane(table),BorderLayout.CENTER);
 
-        JLabel pass =new JLabel("Password");
-        pass.setBounds(420,460,100,20);
-        pass.setFont(new Font("New Times Roman",Font.BOLD,20));
-        add(pass);
+        // Center the JFrame on the screen
+        setLocationRelativeTo(null);
 
-        adminPassword = new JPasswordField();
-        adminPassword.setBounds(650,460,150,30);
-        add(adminPassword);
-
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("admin.png"));
-        Image i= i1.getImage().getScaledInstance(150,140,Image.SCALE_DEFAULT);
-        ImageIcon i2 = new ImageIcon(i);
-        JLabel image = new JLabel(i2);
-        image.setBounds(600,70,300,300);
-        add(image);
-
-        ImageIcon icon5 = new ImageIcon("src/login.png");
-        Image image5 =icon5.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT);
-        adlogin = new JButton("Login",new ImageIcon(image5));
-        adlogin.setBounds(550,550,150,75);
-        adlogin.addActionListener(this);
-        adlogin.setBackground(Color.lightGray);
-        add(adlogin);
-
-        ImageIcon icon6 = new ImageIcon("src/return.png");
-        Image image6 = icon6.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT);
-        back = new JButton("Return",new ImageIcon(image6)); //return to the previous screen
-        back.setBounds(750,550,150,75);
-        back.addActionListener(this);
-        back.setBackground(Color.lightGray);
-        add(back);
-
-        setLayout(null);
         setVisible(true);
+
     }
-    private boolean userVerify(String adminuser, String adminpass) {
-        try (BufferedReader br = new BufferedReader(new FileReader("admin.csv"))) {
+
+    public void initializeComponents() {
+        // Creating a menubar
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+
+        signout = new JMenuItem("Sign Out");
+        quit = new JMenuItem("Quit");
+
+        signout.addActionListener(this);
+        quit.addActionListener(this);
+
+        file.add(signout);
+        file.add(quit);
+
+        menuBar.add(file);
+        setJMenuBar(menuBar);
+
+        // Create the table with an empty model
+        table = new JTable(new DefaultTableModel());
+        table.setDefaultEditor(Object.class, null); // Make the JTable uneditable
+    }
+
+    private void populateTableFromCSV(String inputFileName) {
+        File inputFile = new File(inputFileName);
+        Vector<Vector<String>> vectorVectorStringsData = new Vector<>();
+        Vector<String> vectorColumnIdentifiers = new Vector<>();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        try (FileReader fr = new FileReader(inputFile);
+             BufferedReader br = new BufferedReader(fr)) {
+
+            // Read and set headers
+            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address","Postal Code", "Phone Number", "Email", "Plan"};
+            vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
+
+            int columnRemove = vectorColumnIdentifiers.indexOf("Password");
+
+            // Read data rows
             String line;
             while ((line = br.readLine()) != null) {
-                String[] admin = line.split(",");
-                //check all 2 info is there
-                if (admin.length >= 1) {
-                    String storedUserName = admin[0].trim(); //username
-                    String storedPassword = admin[1].trim(); //password
-
-                    if (storedUserName.equalsIgnoreCase(adminuser) && storedPassword.equals(adminpass)) {
-                        System.out.println("Authentication successful");
-                        return true;
-                    }
+                String[] dataRow = line.split(",");
+                // Remove the column you want to hide (e.g., "Password")
+                int columnIndexToHide = Arrays.asList(columnIdentifiers).indexOf("Password");
+                if (columnIndexToHide >= 0 && columnIndexToHide < dataRow.length) {
+                    // Remove the element at the specified index
+                    dataRow = removeElement(dataRow, columnIndexToHide);
+                    vectorColumnIdentifiers.remove(columnRemove);
                 }
+                vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            // Set the data and column identifiers to the table model
+            model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
+
+        } catch (IOException ioe) {
+            System.out.println("Error");
         }
-        return false;
+    }
+    private String[] removeElement(String[] array, int index) {
+        String[] newArray = new String[array.length - 1];
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
+        return newArray;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == back) {
-            new Main().setVisible(true);
-            setVisible(false);
-        }
-        if (e.getSource() == adlogin) {
-            String adminuser = adminUser.getText();
-            String adminpass = new String(adminPassword.getPassword());
-            if (userVerify(adminuser, adminpass)) {
-                JOptionPane.showMessageDialog(this, "Login Successful");
+        if (e.getSource() == signout) {
+            int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign out?");
+            if (confirmed == JOptionPane.YES_OPTION) {
+                AdminLogin adminLogin = new AdminLogin();
                 dispose();
-            AdminCustomerDetails adminCustomerDetails = new AdminCustomerDetails();
-            } else {
-                JOptionPane.showMessageDialog(this, "Incorrect Username or Password");
             }
+        } else if (e.getSource() == quit) { //Exit from Program
+            System.exit(0);
         }
     }
+
 }
