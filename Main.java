@@ -73,31 +73,25 @@ public class Main extends GUI implements ActionListener {
         JLabel image = new JLabel(i2);
         image.setBounds(600, 70, 250, 250);
         add(image);
-        
+
         setLayout(null);
 
     }
 
     // method to verify user exists in database
-    private boolean userVerify(String userName, String password) {
-        // read user credentials from CSV file and check for authentication
+    private String[] userVerify(String userName, String password) {
         try (BufferedReader br = new BufferedReader(new FileReader("user_data.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // split the CSV line into individual components
                 String[] userData = line.split(",");
-
-                // check to see all 8 pieces of information are present
                 if (userData.length >= 8) {
-                    // extract username and password from the CSV line
                     String storedUserName = userData[1].trim();
                     String storedPassword = userData[2].trim();
 
-                    // check if the entered username and password match the stored values
                     if (storedUserName.toLowerCase().equals(userName.toLowerCase())
                             && storedPassword.equals(password)) {
                         System.out.println("Authentication successful");
-                        return true; // user exists
+                        return userData; // return user data if authentication is successful
                     }
                 }
             }
@@ -106,18 +100,53 @@ public class Main extends GUI implements ActionListener {
         }
 
         System.out.println("Authentication failed");
-        return false; // user does not exists or incorrect information
+        return null; // return null if authentication fails
     }
 
-    @Override
+    // Helper method to calculate total charged based on plan
+    private float calculateTotalCharged(String plan, int offPeakTime, int midPeakTime, int onPeakTime) {
+        float totalCharged = 0;
+
+        switch (plan.toLowerCase()) {
+            case "bronze":
+                totalCharged = BronzePlan.calculateCost(offPeakTime, midPeakTime, onPeakTime);
+                break;
+            case "silver":
+                totalCharged = SilverPlan.calculateCost(offPeakTime, midPeakTime, onPeakTime);
+                break;
+            case "gold":
+                totalCharged = GoldPlan.calculateCost(offPeakTime, midPeakTime, onPeakTime);
+                break;
+            default:
+                break;
+        }
+
+        return totalCharged;
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             String userName = username.getText();
             String pass = new String(password.getPassword());
 
-            if (userVerify(userName, pass)) {
-                JOptionPane.showMessageDialog(this, "Login Successful"); 
-                                                                         
+            // Authenticate user and get user data
+            String[] userData = userVerify(userName, pass);
+
+            if (userData != null) {
+                // Extract plan and peak times from CSV data
+                String plan = userData[9].trim();
+                int offPeakTime = Integer.parseInt(userData[10].trim());
+                int midPeakTime = Integer.parseInt(userData[11].trim());
+                int onPeakTime = Integer.parseInt(userData[12].trim());
+
+                // Calculate total charged based on the plan
+                float totalCharged = calculateTotalCharged(plan, offPeakTime, midPeakTime, onPeakTime);
+
+                // Display customer information
+                new CustomerInfo(plan, offPeakTime, midPeakTime, onPeakTime, totalCharged);
+
+                // Dispose of the current login frame
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrect Username or Password");
             }
