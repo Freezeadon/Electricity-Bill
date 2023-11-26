@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Registration extends JFrame implements ActionListener {
 
-    private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8, regLabel9;
+    private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8,regLabel9;
     private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField, regEmail;
     private JPasswordField regPassword, confirmPasswordField;
     private JButton registerButton, showPasswordButton, backButton;
@@ -31,7 +31,6 @@ public class Registration extends JFrame implements ActionListener {
         regLabel7 = new JLabel("Postal Code");
         regLabel8 = new JLabel("Phone Number");
         regLabel9 = new JLabel("Membership Option");
-        
 
         regEmail = new JTextField(10);
         regUsername = new JTextField(10);
@@ -60,7 +59,7 @@ public class Registration extends JFrame implements ActionListener {
         regLabel8.setFont(newLabelFont);
         regLabel9.setFont(newLabelFont);
 
-        String[] options = {"Bronze", "Silver","Gold"};
+        String[] options = { "Bronze", "Silver", "Gold" };
         plans = new JComboBox<>(options);
 
         // font for textfields
@@ -75,7 +74,6 @@ public class Registration extends JFrame implements ActionListener {
         postalCodeField.setFont(newFieldFont);
         phoneNumberField.setFont(newFieldFont);
         plans.setFont(newFieldFont);
-
 
         // font for buttons
         Font newButtonFont = new Font("SansSerif", Font.BOLD, 15);
@@ -138,7 +136,7 @@ public class Registration extends JFrame implements ActionListener {
         y += gap;
 
         regLabel9.setBounds(labelX, y, 150, 30);
-        plans = new JComboBox<>(new String[]{"Bronze", "Silver", "Gold"});
+        plans = new JComboBox<>(new String[] { "Bronze", "Silver", "Gold" });
         plans.setFont(newFieldFont);
         plans.setBounds(textFieldX, y, textFieldWidth, 30);
         y += gap * 1.5;
@@ -205,7 +203,7 @@ public class Registration extends JFrame implements ActionListener {
             while ((line = br.readLine()) != null) {
                 String[] userData = line.split(",");
                 if (userData.length >= 9) {
-                    String storedEmail = userData[8].trim(); 
+                    String storedEmail = userData[8].trim();
                     if (storedEmail.equalsIgnoreCase(emailCheck)) {
                         return true;
                     }
@@ -224,19 +222,25 @@ public class Registration extends JFrame implements ActionListener {
 
     // writing to CSV file
     private void writeUserDataToCSV(int customerId, String username, String password, String firstName, String lastName,
-            String address, String postalCode, String phoneNumber, String emailAddress, String plans) {
+            String address, String postalCode, String phoneNumber, String emailAddress, String plan,
+            int offPeakTime, int midPeakTime, int onPeakTime) {
         try (FileWriter fileWriter = new FileWriter("user_data.csv", true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
 
-            // add user data to the CSV file
+            // Add user data and random times to the CSV file
             printWriter.println(customerId + "," + username + "," + password + "," +
                     firstName + "," + lastName + "," + address + "," +
-                    postalCode + "," + phoneNumber + "," + emailAddress + "," + plans);
+                    postalCode + "," + phoneNumber + "," + emailAddress + "," + plan + "," +
+                    offPeakTime + "," + midPeakTime + "," + onPeakTime);
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private int hoursUsed() {
+        return new Random().nextInt(1001); // Generates a random number between 0 (inclusive) and 1000 (exclusive)
     }
 
     @Override
@@ -263,17 +267,22 @@ public class Registration extends JFrame implements ActionListener {
             String phoneNumber = phoneNumberField.getText();
             String options = (String) plans.getSelectedItem();
 
-
             if (usernameVerify(newUsername)) {
                 JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
-            }else if (emailVerify(emailAddress)) {
-                JOptionPane.showMessageDialog(this, "Email is associated with another user. Please choose a different email.");
+            } else if (emailVerify(emailAddress)) {
+                JOptionPane.showMessageDialog(this,
+                        "Email is associated with another user. Please choose a different email.");
             } else if (!newPass.equals(confirmPass)) {
                 JOptionPane.showMessageDialog(this, "Passwords do not match. Please try again.");
             } else {
                 // Generate a unique customer ID and store it in the CSV file
                 int randomCustomerId = generateRandomCustomerId();
-                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName, address, postalCode, phoneNumber, emailAddress, options);
+                int offPeakTime = hoursUsed();
+                int midPeakTime = hoursUsed();
+                int onPeakTime = hoursUsed();
+                writeUserDataToCSV(randomCustomerId, newUsername, newPass, firstName, lastName,
+                        address, postalCode, phoneNumber, emailAddress, options,
+                        offPeakTime, midPeakTime, onPeakTime);
                 JOptionPane.showMessageDialog(this, "Registration Successful");
                 this.dispose();
                 // return to login page
