@@ -10,13 +10,20 @@ public class Main extends GUI implements ActionListener {
 
     private JTextField username;
     private JPasswordField password;
-    private final JButton login;
-    private final JButton quit;
-    private final JButton admin;
-    private final JButton signup;
+    private  JButton login;
+    private  JButton quit;
+    private  JButton admin;
+    private  JButton signup;
 
     Main() {
         super("Zeus Utilities");
+        setLayout(null);
+        initializeComponents();
+        setSize(1000,1000);
+        setLocationRelativeTo(null);
+    }
+    @Override
+    protected void initializeComponents() {
         JLabel user = new JLabel("Username");
         user.setBounds(550, 320, 100, 20);
         user.setFont(new Font("New Times Roman", Font.BOLD, 20));
@@ -34,7 +41,6 @@ public class Main extends GUI implements ActionListener {
         password = new JPasswordField();
         password.setBounds(650, 360, 150, 30);
         add(password);
-
         ImageIcon icon1 = new ImageIcon("src/login.png"); // getting image
         Image image1 = icon1.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT); // scaling the image
         login = new JButton("Login", new ImageIcon(image1)); // adding image and text on button
@@ -73,9 +79,6 @@ public class Main extends GUI implements ActionListener {
         JLabel image = new JLabel(i2);
         image.setBounds(600, 70, 250, 250);
         add(image);
-
-        setLayout(null);
-
     }
 
     // method to verify user exists in database
@@ -164,4 +167,5 @@ public class Main extends GUI implements ActionListener {
     public static void main(String[] args) {
         new Main().setVisible(true);
     }
+
 }
