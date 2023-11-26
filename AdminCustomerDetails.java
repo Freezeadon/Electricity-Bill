@@ -19,9 +19,9 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
 
     public AdminCustomerDetails() {
         super("Customer Details");
-
-        // Initialize components
         initializeComponents();
+        setSize(1000,1000);
+        setLocationRelativeTo(null);
 
         // Read data from CSV and populate the table
         populateTableFromCSV("user_data.csv");
@@ -39,7 +39,7 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
 
     }
 
-    private void initializeComponents() {
+    public void initializeComponents() {
         // Creating a menubar
         menuBar = new JMenuBar();
         file = new JMenu("File");
