@@ -20,7 +20,7 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
     public AdminCustomerDetails() {
         super("Customer Details");
         initializeComponents();
-        setSize(1000,1000);
+        setSize(1000, 1000);
         setLocationRelativeTo(null);
 
         // Read data from CSV and populate the table
@@ -30,13 +30,12 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
         JPanel panel = new JPanel();
         setLayout(new BorderLayout());
         // Add the panel to the frame
-        add(new JScrollPane(table),BorderLayout.CENTER);
+        add(new JScrollPane(table), BorderLayout.CENTER);
 
         // Center the JFrame on the screen
         setLocationRelativeTo(null);
 
         setVisible(true);
-
     }
 
     public void initializeComponents() {
@@ -71,24 +70,24 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
              BufferedReader br = new BufferedReader(fr)) {
 
             // Read and set headers
-            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address","Postal Code", "Phone Number", "Email", "Plan"};
+            String[] columnIdentifiers = {"Account Number", "Username", "Password", "First Name", "Last Name", "Address", "Postal Code", "Phone Number", "Email", "Plan"};
             vectorColumnIdentifiers.addAll(Arrays.asList(columnIdentifiers));
 
-            int columnRemove = vectorColumnIdentifiers.indexOf("Password");
+            int columnIndexToRemove = vectorColumnIdentifiers.indexOf("Password");
 
             // Read data rows
             String line;
             while ((line = br.readLine()) != null) {
                 String[] dataRow = line.split(",");
-                // Remove the column you want to hide (e.g., "Password")
-                int columnIndexToHide = Arrays.asList(columnIdentifiers).indexOf("Password");
-                if (columnIndexToHide >= 0 && columnIndexToHide < dataRow.length) {
-                    // Remove the element at the specified index
-                    dataRow = removeElement(dataRow, columnIndexToHide);
-                    vectorColumnIdentifiers.remove(columnRemove);
+                if (columnIndexToRemove >= 0 && columnIndexToRemove < dataRow.length) {
+                    // Remove the "Password" column from dataRow
+                    dataRow = removeElement(dataRow, columnIndexToRemove);
                 }
                 vectorVectorStringsData.add(new Vector<>(Arrays.asList(dataRow)));
             }
+
+            // Remove the "Password" column from column identifiers
+            vectorColumnIdentifiers.remove(columnIndexToRemove);
 
             // Set the data and column identifiers to the table model
             model.setDataVector(vectorVectorStringsData, vectorColumnIdentifiers);
@@ -97,6 +96,7 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
             System.out.println("Error");
         }
     }
+
     private String[] removeElement(String[] array, int index) {
         String[] newArray = new String[array.length - 1];
         System.arraycopy(array, 0, newArray, 0, index);
@@ -112,13 +112,8 @@ public class AdminCustomerDetails extends GUI implements ActionListener {
                 AdminLogin adminLogin = new AdminLogin();
                 dispose();
             }
-        } else if (e.getSource() == quit) { //Exit from Program
+        } else if (e.getSource() == quit) { // Exit from Program
             System.exit(0);
         }
     }
-
 }
-
-
-
-
