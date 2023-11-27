@@ -13,6 +13,10 @@ public abstract class GUI extends JFrame {
         }
         getContentPane().setBackground(Color.pink);
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(1300, 1000);
+        setLocationRelativeTo(null);
+        setLayout(null);
     }
     protected abstract void initializeComponents();
 }
