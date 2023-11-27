@@ -10,20 +10,13 @@ public class Main extends GUI implements ActionListener {
 
     private JTextField username;
     private JPasswordField password;
-    private  JButton login;
-    private  JButton quit;
-    private  JButton admin;
-    private  JButton signup;
+    private final JButton login;
+    private final JButton quit;
+    private final JButton admin;
+    private final JButton signup;
 
     Main() {
         super("Zeus Utilities");
-        setLayout(null);
-        initializeComponents();
-        setSize(1000,1000);
-        setLocationRelativeTo(null);
-    }
-    @Override
-    protected void initializeComponents() {
         JLabel user = new JLabel("Username");
         user.setBounds(550, 320, 100, 20);
         user.setFont(new Font("New Times Roman", Font.BOLD, 20));
@@ -41,9 +34,10 @@ public class Main extends GUI implements ActionListener {
         password = new JPasswordField();
         password.setBounds(650, 360, 150, 30);
         add(password);
+
         ImageIcon icon1 = new ImageIcon("src/login.png"); // getting image
         Image image1 = icon1.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT); // scaling the image
-        login = new JButton("Login", new ImageIcon(image1)); // adding image and text on button
+        login = new JButton("Login"); // adding image and text on button
         login.setBounds(650, 450, 150, 75);
         login.addActionListener(this);
         login.setBackground(Color.lightGray);
@@ -51,7 +45,7 @@ public class Main extends GUI implements ActionListener {
 
         ImageIcon icon2 = new ImageIcon("src/cancel.png");
         Image image2 = icon2.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        quit = new JButton("Quit", new ImageIcon(image2));
+        quit = new JButton("Quit");
         quit.setBounds(650, 650, 150, 75);
         quit.addActionListener(this);
         quit.setBackground(Color.lightGray);
@@ -59,7 +53,7 @@ public class Main extends GUI implements ActionListener {
 
         ImageIcon icon3 = new ImageIcon("src/admin.png");
         Image image3 = icon3.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        admin = new JButton("Admin Login", new ImageIcon(image3));
+        admin = new JButton("Admin Login");
         admin.setBounds(850, 550, 150, 75);
         admin.addActionListener(this);
         admin.setBackground(Color.lightGray);
@@ -67,18 +61,21 @@ public class Main extends GUI implements ActionListener {
 
         ImageIcon icon4 = new ImageIcon("src/newuser.png");
         Image image4 = icon4.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        signup = new JButton("New User", new ImageIcon(image4));
+        signup = new JButton("New User");
         signup.setBounds(450, 550, 150, 75);
         signup.addActionListener(this);
         signup.setBackground(Color.lightGray);
         add(signup);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
-        Image i = i1.getImage().getScaledInstance(160, 150, Image.SCALE_DEFAULT);
-        ImageIcon i2 = new ImageIcon(i);
-        JLabel image = new JLabel(i2);
-        image.setBounds(600, 70, 250, 250);
-        add(image);
+        //ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
+        //Image i = i1.getImage().getScaledInstance(160, 150, Image.SCALE_DEFAULT);
+        //ImageIcon i2 = new ImageIcon(i);
+        //JLabel image = new JLabel(i2);
+        //image.setBounds(600, 70, 250, 250);
+        //add(image);
+
+        setLayout(null);
+
     }
 
     // method to verify user exists in database
@@ -138,6 +135,7 @@ public class Main extends GUI implements ActionListener {
             if (userData != null) {
                 // Extract plan and peak times from CSV data
                 String plan = userData[9].trim();
+                
                 int offPeakTime = Integer.parseInt(userData[10].trim());
                 int midPeakTime = Integer.parseInt(userData[11].trim());
                 int onPeakTime = Integer.parseInt(userData[12].trim());
@@ -145,9 +143,16 @@ public class Main extends GUI implements ActionListener {
                 // Calculate total charged based on the plan
                 float totalCharged = calculateTotalCharged(plan, offPeakTime, midPeakTime, onPeakTime);
 
+                // Extract data for Invoice
+                
+                String firstName = userData[3].trim();
+                String lastName = userData[4].trim();
+                String address = userData[5].trim();
+                String phoneNumber = userData[7].trim();
+                
                 // Display customer information
-                new CustomerInfo(plan, offPeakTime, midPeakTime, onPeakTime, totalCharged);
-
+                new CustomerInfo(plan, offPeakTime, midPeakTime, onPeakTime, totalCharged, firstName, lastName, address, phoneNumber);
+                
                 // Dispose of the current login frame
                 dispose();
             } else {
@@ -167,5 +172,4 @@ public class Main extends GUI implements ActionListener {
     public static void main(String[] args) {
         new Main().setVisible(true);
     }
-
 }
