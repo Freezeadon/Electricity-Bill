@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 
 public class CustomerInfo extends JFrame {
 
-	private JLabel planType, offPeak, midPeak, onPeak, overCosted, delivery, regulatory, HST, subTotal, totalHST;
-	private JLabel planValue, offPeakValue, midPeakValue, onPeakValue, overCostedValue, deliveryValue, regulatoryValue,
+	private JLabel customerIDtext, planType, offPeak, midPeak, onPeak, overCosted, delivery, regulatory, HST, subTotal, totalHST;
+	private JLabel customerIDNo, planValue, offPeakValue, midPeakValue, onPeakValue, overCostedValue, deliveryValue, regulatoryValue,
 			HSTValue, subTotalValue, totalHSTValue;
 	private JButton closeButton, invoiceButton;
 	private JPanel infoPanel;
 
-	public CustomerInfo(String plan, int offPeakTime, int midPeakTime, int onPeakTime, float total, String firstName, String lastName, String address, String phoneNumber) {
+	public CustomerInfo(String customerId, String plan, int offPeakTime, int midPeakTime, int onPeakTime, float total, String firstName, String lastName, String address, String phoneNumber) {
 		super("Customer Information");
 
 		float offPeakPrice, midPeakPrice, onPeakPrice, deliveryPrice, overCost = 0, totalTime;
@@ -57,6 +57,7 @@ public class CustomerInfo extends JFrame {
 		float hst = totalCharged * 0.13f;
 		float totalChargedWithHST = total;
 
+		customerIDtext = new JLabel("Customer ID: ");
 		planType = new JLabel("Plan:");
 		offPeak = new JLabel("Off-Peak Time:");
 		midPeak = new JLabel("Mid-Peak Time:");
@@ -68,6 +69,7 @@ public class CustomerInfo extends JFrame {
 		subTotal = new JLabel("Subtotal:");
 		totalHST = new JLabel("Total:");
 
+		customerIDNo = offPeakValue = new JLabel(customerId);
 		planValue = new JLabel(plan);
 		offPeakValue = new JLabel(Integer.toString(offPeakTime));
 		midPeakValue = new JLabel(Integer.toString(midPeakTime));
@@ -83,9 +85,11 @@ public class CustomerInfo extends JFrame {
 		invoiceButton = new JButton("Invoice");
 
 		// Font settings
+		Font customerFont = new Font("SansSerif", Font.BOLD, 17);
 		Font labelFont = new Font("SansSerif", Font.BOLD, 15);
 		Font valueFont = new Font("SansSerif", Font.PLAIN, 14);
 
+		customerIDtext.setFont(customerFont);
 		planType.setFont(labelFont);
 		offPeak.setFont(labelFont);
 		midPeak.setFont(labelFont);
@@ -97,7 +101,7 @@ public class CustomerInfo extends JFrame {
 		subTotal.setFont(labelFont);
 		totalHST.setFont(labelFont);
 		
-
+		customerIDNo.setFont(customerFont);
 		planValue.setFont(valueFont);
 		offPeakValue.setFont(valueFont);
 		midPeakValue.setFont(valueFont);
@@ -116,10 +120,14 @@ public class CustomerInfo extends JFrame {
 		infoPanel.setLayout(null);
 		infoPanel.setBackground(Color.PINK);
 
-		int labelX = 130; // x value for labels
-		int valueX = 300; // x value for values
+		int labelX = 150; // x value for labels
+		int valueX = 330; // x value for values
 		int y = 50; // y value for both labels and values
 		int gap = 30;
+
+		customerIDtext.setBounds(35, 25, 150, 30);
+		customerIDNo.setBounds(145, 25, 200, 30);
+		y += gap;
 
 		planType.setBounds(labelX, y, 150, 30);
 		planValue.setBounds(valueX, y, 200, 30);
@@ -160,12 +168,12 @@ public class CustomerInfo extends JFrame {
 		totalHST.setBounds(labelX, y, 150, 30);
 		totalHSTValue.setBounds(valueX, y, 200, 30);
 
-		closeButton.setBounds(300, 400, 100, 30);
+		closeButton.setBounds(280, 400, 100, 30);
 		closeButton.addActionListener(e -> dispose());
 		
 		float allTime = offPeakTime + midPeakTime + onPeakTime;
 		
-		invoiceButton.setBounds(200, 400, 100, 30);
+		invoiceButton.setBounds(170, 400, 100, 30);
 		invoiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,6 +184,7 @@ public class CustomerInfo extends JFrame {
             }
         });
 		
+		infoPanel.add(customerIDtext);
 		infoPanel.add(planType);
 		infoPanel.add(offPeak);
 		infoPanel.add(midPeak);
@@ -187,6 +196,7 @@ public class CustomerInfo extends JFrame {
 		infoPanel.add(subTotal);
 		infoPanel.add(totalHST);
 
+		infoPanel.add(customerIDNo);
 		infoPanel.add(planValue);
 		infoPanel.add(offPeakValue);
 		infoPanel.add(midPeakValue);
