@@ -67,12 +67,12 @@ public class Main extends GUI implements ActionListener {
         signup.setBackground(Color.lightGray);
         add(signup);
 
-        //ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
-        //Image i = i1.getImage().getScaledInstance(160, 150, Image.SCALE_DEFAULT);
-        //ImageIcon i2 = new ImageIcon(i);
-        //JLabel image = new JLabel(i2);
-        //image.setBounds(600, 70, 250, 250);
-        //add(image);
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Electronic.png"));
+        Image i = i1.getImage().getScaledInstance(160, 150, Image.SCALE_DEFAULT);
+        ImageIcon i2 = new ImageIcon(i);
+        JLabel image = new JLabel(i2);
+        image.setBounds(600, 70, 250, 250);
+        add(image);
 
         setLayout(null);
 
@@ -133,9 +133,9 @@ public class Main extends GUI implements ActionListener {
             String[] userData = userVerify(userName, pass);
 
             if (userData != null) {
-                // Extract plan and peak times from CSV data
+                // Extract plan, peak times and customer ID from CSV data for customerinfo page
+                String customerId = userData[0].trim();
                 String plan = userData[9].trim();
-                
                 int offPeakTime = Integer.parseInt(userData[10].trim());
                 int midPeakTime = Integer.parseInt(userData[11].trim());
                 int onPeakTime = Integer.parseInt(userData[12].trim());
@@ -151,7 +151,7 @@ public class Main extends GUI implements ActionListener {
                 String phoneNumber = userData[7].trim();
                 
                 // Display customer information
-                new CustomerInfo(plan, offPeakTime, midPeakTime, onPeakTime, totalCharged, firstName, lastName, address, phoneNumber);
+                new CustomerInfo(customerId, plan, offPeakTime, midPeakTime, onPeakTime, totalCharged, firstName, lastName, address, phoneNumber);
                 
                 // Dispose of the current login frame
                 dispose();
@@ -167,6 +167,9 @@ public class Main extends GUI implements ActionListener {
             AdminLogin adminLogin = new AdminLogin();
             dispose();
         }
+    }
+
+    protected void initializeComponents() {
     }
 
     public static void main(String[] args) {
