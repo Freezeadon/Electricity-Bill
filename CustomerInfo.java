@@ -1,15 +1,20 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class CustomerInfo extends JFrame {
 
 	private JLabel planType, offPeak, midPeak, onPeak, overCosted, delivery, regulatory, HST, subTotal, totalHST;
 	private JLabel planValue, offPeakValue, midPeakValue, onPeakValue, overCostedValue, deliveryValue, regulatoryValue,
 			HSTValue, subTotalValue, totalHSTValue;
-	private JButton closeButton;
+	private JButton closeButton, invoiceButton;
 	private JPanel infoPanel;
 
-	public CustomerInfo(String plan, int offPeakTime, int midPeakTime, int onPeakTime, float total) {
+	public CustomerInfo(String plan, int offPeakTime, int midPeakTime, int onPeakTime, float total, String firstName, String lastName, String address, String phoneNumber) {
 		super("Customer Information");
 
 		float offPeakPrice, midPeakPrice, onPeakPrice, deliveryPrice, overCost = 0, totalTime;
@@ -77,6 +82,7 @@ public class CustomerInfo extends JFrame {
 		totalHSTValue = new JLabel(Float.toString(totalChargedWithHST));
 
 		closeButton = new JButton("Close");
+		invoiceButton = new JButton("Invoice");
 
 		// Font settings
 		Font labelFont = new Font("SansSerif", Font.BOLD, 15);
@@ -92,7 +98,7 @@ public class CustomerInfo extends JFrame {
 		HST.setFont(labelFont);
 		subTotal.setFont(labelFont);
 		totalHST.setFont(labelFont);
-		;
+		
 
 		planValue.setFont(valueFont);
 		offPeakValue.setFont(valueFont);
@@ -106,7 +112,8 @@ public class CustomerInfo extends JFrame {
 		totalHSTValue.setFont(valueFont);
 
 		closeButton.setFont(new Font("SansSerif", Font.BOLD, 15));
-
+		invoiceButton.setFont(new Font("SansSerif", Font.BOLD, 15));
+		
 		infoPanel = new JPanel();
 		infoPanel.setLayout(null);
 		infoPanel.setBackground(Color.PINK);
@@ -155,9 +162,22 @@ public class CustomerInfo extends JFrame {
 		totalHST.setBounds(labelX, y, 150, 30);
 		totalHSTValue.setBounds(valueX, y, 200, 30);
 
-		closeButton.setBounds(250, 400, 100, 30);
+		closeButton.setBounds(300, 400, 100, 30);
 		closeButton.addActionListener(e -> dispose());
-
+		
+		float allTime = offPeakTime + midPeakTime + onPeakTime;
+		
+		invoiceButton.setBounds(200, 400, 100, 30);
+		invoiceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Create an instance of AnotherClass and call the method
+            	new Invoice(firstName, lastName, address, phoneNumber, totalChargedWithHST, allTime);
+            	
+            	dispose();
+            }
+        });
+		
 		infoPanel.add(planType);
 		infoPanel.add(offPeak);
 		infoPanel.add(midPeak);
@@ -181,6 +201,7 @@ public class CustomerInfo extends JFrame {
 		infoPanel.add(totalHSTValue);
 
 		infoPanel.add(closeButton);
+		infoPanel.add(invoiceButton);
 
 		add(infoPanel);
 
