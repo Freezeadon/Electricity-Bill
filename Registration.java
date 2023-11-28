@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Random;
 
-public class Registration extends JFrame implements ActionListener {
+public class Registration extends GUI implements ActionListener {
 
     private JLabel regLabel0, regLabel1, regLabel2, regLabel3, regLabel4, regLabel5, regLabel6, regLabel7, regLabel8,regLabel9;
     private JTextField regUsername, firstNameField, lastNameField, addressField, postalCodeField, phoneNumberField, regEmail;
@@ -17,7 +17,14 @@ public class Registration extends JFrame implements ActionListener {
 
     Registration(Main loginPage) {
         super("Registration");
-        this.loginPage = loginPage;
+        initializeComponents();
+        this.loginPage =loginPage;
+        setSize(600,500);
+        setLocationRelativeTo(null);
+
+    }
+    @Override
+    protected void initializeComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
@@ -172,7 +179,6 @@ public class Registration extends JFrame implements ActionListener {
 
         add(regPanel);
 
-        setSize(600, 500);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -222,11 +228,11 @@ public class Registration extends JFrame implements ActionListener {
 
     // writing to CSV file
     private void writeUserDataToCSV(int customerId, String username, String password, String firstName, String lastName,
-            String address, String postalCode, String phoneNumber, String emailAddress, String plan,
-            int offPeakTime, int midPeakTime, int onPeakTime) {
+                                    String address, String postalCode, String phoneNumber, String emailAddress, String plan,
+                                    int offPeakTime, int midPeakTime, int onPeakTime) {
         try (FileWriter fileWriter = new FileWriter("user_data.csv", true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
 
             // Add user data and random times to the CSV file
             printWriter.println(customerId + "," + username + "," + password + "," +
