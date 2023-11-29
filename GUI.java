@@ -11,7 +11,7 @@ public abstract class GUI extends JFrame {
         } catch (Exception e){
             e.printStackTrace();
         }
-        getContentPane().setBackground(Color.pink);
+        getContentPane().setBackground(new Color(173, 216, 230));
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(1300, 1000);
