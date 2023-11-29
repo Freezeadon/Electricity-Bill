@@ -95,7 +95,7 @@ public class Registration extends GUI implements ActionListener {
 
         regPanel = new JPanel();
         regPanel.setLayout(null);
-        regPanel.setBackground(Color.PINK); // set background color to pink
+        regPanel.setBackground(new Color(173, 216, 230));
 
         // Auto sets x and y for all labels and text fields, gap is used as something
         // that will be added to y to make a gap for the next set of labels and text
